@@ -1,1 +1,2 @@
 matplotlib
+pulp  # optional: only for the MILP comparison (main.py -m)

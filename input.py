@@ -2,14 +2,14 @@ from __future__ import annotations
 import argparse
 
 
-def parse_cmd_line() -> tuple(str, bool):
+def parse_cmd_line() -> tuple[str, bool, bool]:
     """
     Parses command line from standard input.
 
     Returns
     -------
-    tuple(str, bool)
-        path to input graph file, whether to plot the graph.
+    tuple[str, bool, bool]
+        path to input graph file, whether to plot the graph, whether to run the MILP.
     """
     parser = argparse.ArgumentParser("Padam R&D Test")
     parser.add_argument("-i", "--in_file", help="path to graph txt file", dest="in_file", required=True)
@@ -22,8 +22,17 @@ def parse_cmd_line() -> tuple(str, bool):
         default=False,
         required=False,
     )
+    parser.add_argument(
+        "-m",
+        "--milp",
+        help="also solve the MILP (exact, needs PuLP) to compare",
+        action="store_true",
+        dest="run_milp",
+        default=False,
+        required=False,
+    )
     args = parser.parse_args()
-    return args.in_file, args.plot_graph
+    return args.in_file, args.plot_graph, args.run_milp
 
 
 def parse_file(file_name: str) -> tuple[list[tuple], list[tuple]]:
